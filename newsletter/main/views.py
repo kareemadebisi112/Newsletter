@@ -6,6 +6,7 @@ from .utils import sendToSalesforce
 import asyncio
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from .forms import SubscriberForm
 
 # Create your views here.
 class Email():
@@ -22,15 +23,41 @@ def index(request):
     return render(request, 'main/index.html')
 
 def sendToDatabase(request):
-    data = json.loads(request.body)
-    user = request.user
-    email = data['visitor']['email'].lower()
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        # form = SubscriberForm(request.POST)
+        print('Form:',form['email'][0])
+        # if form.is_valid():
+        #     subscriber = form.save()
+        #     context = {'email': subscriber.email}
+        #     print(context)
+        # else:
+        #     print('Not valid')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # data = json.loads(request.body)
+    # user = request.user
+    # email = data['visitor']['email'].lower()
 
     # Add Email to Collection
-    emailClass.addEmail(emailClass, email)
+    # emailClass.addEmail(emailClass, email)
     # TODO: Add Email Verification
-    # sendEmail(request, email)
-    print(emailClass.emails)
+    # sendEmail(request, email, context)
+    # print(emailClass.emails)
 
     # Create an Email record 
     # Email.objects.create(
@@ -41,9 +68,9 @@ def sendToDatabase(request):
     # asyncio.run(sendToSalesforce(email))
     return JsonResponse('Success',safe=False)
 
-def sendEmail(request, email):
+def sendEmail(request, email, context):
     subject = 'Thank you.'
-    message = render_to_string('email/test_email.html')
+    message = render_to_string('email/test_email.html', context)
     email = EmailMessage(subject, message, to=[email])
 
     if email.send():
