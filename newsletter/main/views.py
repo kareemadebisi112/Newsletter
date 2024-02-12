@@ -8,6 +8,16 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
 # Create your views here.
+class Email():
+    emails = []
+
+    def addEmail(self, name):
+        self.emails.append(name)
+    def clearEMail(self):
+        self.emails = []
+
+emailClass = Email
+
 def index(request):
     return render(request, 'main/index.html')
 
@@ -16,13 +26,19 @@ def sendToDatabase(request):
     user = request.user
     email = data['visitor']['email'].lower()
 
+    # Add Email to Collection
+    emailClass.addEmail(emailClass, email)
+    # TODO: Add Email Verification
+    # sendEmail(request, email)
+    print(emailClass.emails)
+
     # Create an Email record 
-    Email.objects.create(
-        email = email,
-    )
-    sendEmail(request, email)
-    print('Data:', request.body)
-    asyncio.run(sendToSalesforce(email))
+    # Email.objects.create(
+    #     email = email,
+    # )
+
+    # print('Data:', request.body)
+    # asyncio.run(sendToSalesforce(email))
     return JsonResponse('Success',safe=False)
 
 def sendEmail(request, email):
