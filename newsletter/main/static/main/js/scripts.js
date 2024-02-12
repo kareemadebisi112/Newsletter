@@ -13,7 +13,6 @@ document.querySelector('form.contactForm').addEventListener('submit', function (
     submitFormData()    
 });
 
-
 function submitFormData(){
     var visitor = {
         'email': null,
