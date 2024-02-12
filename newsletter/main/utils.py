@@ -12,6 +12,7 @@ async def sendToSalesforce(email):
     sf = Salesforce(instance=instance, session_id=session_id)
     data = [{
         'Name': email,
+        'From_Where__c': 'Newsletter',
     }]
     response = sf.bulk.Email__c.insert(data)
     print(response)

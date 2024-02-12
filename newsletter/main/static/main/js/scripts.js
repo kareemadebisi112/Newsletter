@@ -31,6 +31,6 @@ function submitFormData(){
     .then((response) => response.json())
     .then((data) =>{
         console.log('Success:', data);
-        alert('Transaction completed');
+        alert('Thanks for signing up!');
     })
 }

@@ -18,7 +18,7 @@ def sendToDatabase(request):
 
     # Create an Email record 
     Email.objects.create(
-        email = email
+        email = email,
     )
     sendEmail(request, email)
     print('Data:', request.body)
